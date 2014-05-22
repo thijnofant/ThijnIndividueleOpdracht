@@ -21,14 +21,16 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
         /// <summary>
         /// This Constructor is used to make a reply on a comment
         /// </summary>
+        /*
         public Comment()
         {
             throw new NotImplementedException();
         }
+        */
 
         public Video Video{get; private set;}
 
-        public Comment Comment {get; private set;}
+        //public Comment Comment {get; private set;}
 
         public Account Account {get; private set;}
 

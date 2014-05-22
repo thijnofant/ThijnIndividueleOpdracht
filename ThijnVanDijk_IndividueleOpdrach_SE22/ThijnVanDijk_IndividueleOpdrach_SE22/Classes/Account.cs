@@ -17,7 +17,7 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
 
         public string Name { get; private set; }
 
-        private string Password { private get; private set; }
+        public string Password { get; private set; }
 
         public List<Channel> Subscribtion { get; private set; }
 
@@ -26,7 +26,7 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             throw new NotImplementedException();
         }
 
-        public bool LogIn()
+        public bool LogIn(string password)
         {
             throw new NotImplementedException();
         }
