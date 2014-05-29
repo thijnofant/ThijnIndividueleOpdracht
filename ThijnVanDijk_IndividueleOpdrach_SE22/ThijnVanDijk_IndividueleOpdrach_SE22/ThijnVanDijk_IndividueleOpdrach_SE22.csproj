@@ -53,6 +53,7 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="ChannelPage.aspx" />
+    <Content Include="CreateAccount.aspx" />
     <Content Include="HomePage.aspx" />
     <Content Include="LogIn.aspx" />
     <Content Include="Styles\Site.css" />
@@ -89,10 +90,19 @@
     <Compile Include="Classes\Account.cs" />
     <Compile Include="Classes\Channel.cs" />
     <Compile Include="Classes\Comment.cs" />
-    <Compile Include="Classes\DBConnect.cs" />
+    <Compile Include="Classes\DBConnect.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Classes\Playlist.cs" />
     <Compile Include="Classes\Video.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="CreateAccount.aspx.cs">
+      <DependentUpon>CreateAccount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreateAccount.aspx.designer.cs">
+      <DependentUpon>CreateAccount.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

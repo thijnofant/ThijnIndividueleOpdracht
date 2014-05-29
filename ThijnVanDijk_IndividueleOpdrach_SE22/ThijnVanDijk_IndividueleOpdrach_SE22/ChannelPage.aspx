@@ -2,4 +2,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:Label ID="lblSub" runat="server" Text="Subscribers: 000000"></asp:Label>
+&nbsp;&nbsp;
+    <asp:Button ID="btnSub" runat="server" onclick="btnSub_Click" 
+        Text="Subscribe" />
+&nbsp;<asp:Button ID="btnUpgrade" runat="server" onclick="btnUpgrade_Click" 
+        Text="Upgrade Account" />
+&nbsp;
 </asp:Content>
