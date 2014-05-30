@@ -11,7 +11,8 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.Cookies["WhaleTV"] != null && Request.Cookies["WhaleTV"]["Channel"] == null)
+            if (Request.Cookies["WhaleTV"] != null && Request.Cookies["WhaleTV"]["UserName"] == Page.RouteData.Values["ChannelName"].ToString()
+                && Request.Cookies["WhaleTV"]["Channel"] == null)
             {
                 btnUpgrade.Visible = true;
                 ChannelNAme.Visible = true;
