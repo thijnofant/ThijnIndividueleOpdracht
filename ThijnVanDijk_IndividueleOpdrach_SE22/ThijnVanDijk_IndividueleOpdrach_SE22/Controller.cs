@@ -25,13 +25,30 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
         #endregion
 
         private DBConnect connector = new DBConnect();
+
         public string LogIn(string userName, string password) 
         {
             return connector.LogIn(userName, password);
         }
+
         public void NewAccount(string userName, string password)
         {
             connector.CreateAccount(userName, password);
+        }
+
+        public void upgradeAccount(string userName, string channelName, bool adds)
+        {
+            connector.UpgradeAccount(userName, channelName, adds);
+        }
+
+        public string GetSubs(string ChannelName)
+        {
+            return connector.GetSubs(ChannelName);
+        }
+
+        public void Subscribe(string channelName, string userName)
+        {
+            connector.Subscribe(channelName, userName);
         }
     }
 }

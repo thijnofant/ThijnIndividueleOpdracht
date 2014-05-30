@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
+using System.Web.Routing;
 
 namespace ThijnVanDijk_IndividueleOpdrach_SE22
 {
@@ -12,8 +13,7 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
 
         void Application_Start(object sender, EventArgs e)
         {
-            // Code that runs on application startup
-
+            RegisterRoutes(RouteTable.Routes);
         }
 
         void Application_End(object sender, EventArgs e)
@@ -43,5 +43,19 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
 
         }
 
+        void RegisterRoutes(RouteCollection routes)
+        {
+            routes.MapPageRoute("ChannelPage",
+                "channel/{ChannelName}",
+                "~/ChannelPage.aspx", true,
+                new RouteValueDictionary { 
+                    {"ChannelName" , "[a-z]{1-12}"} });
+
+            routes.MapPageRoute("VideoPage",
+                "video/{VideoID}",
+                "~/VideoPage.aspx", true,
+                new RouteValueDictionary {
+                    {"VideoID", @"/d {1-10}"} });
+        }
     }
 }

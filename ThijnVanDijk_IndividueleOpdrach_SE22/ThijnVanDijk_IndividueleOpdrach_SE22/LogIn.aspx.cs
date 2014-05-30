@@ -21,9 +21,19 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
         {
             string userName = tbUserName.Text;
             string password = tbPassword.Text;
-            if (Controller.Instance.LogIn(userName, password) == "1")
+
+            string Passcheck = Controller.Instance.LogIn(userName, password);
+
+            if (Passcheck == "1")
             {
                 Response.Cookies["WhaleTV"]["UserName"] = tbUserName.Text;
+                Response.Cookies["WhaleTV"].Expires = DateTime.Now.AddMinutes(15);
+                Response.Redirect("LogIn.aspx");
+            }
+            else if (Passcheck != "0")
+            {
+                Response.Cookies["WhaleTV"]["UserName"] = tbUserName.Text;
+                Response.Cookies["WhaleTV"]["Channel"] = Passcheck;
                 Response.Cookies["WhaleTV"].Expires = DateTime.Now.AddMinutes(15);
                 Response.Redirect("LogIn.aspx");
             }

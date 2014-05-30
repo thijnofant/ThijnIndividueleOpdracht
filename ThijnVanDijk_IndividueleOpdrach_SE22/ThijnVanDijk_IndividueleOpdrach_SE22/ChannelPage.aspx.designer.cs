@@ -13,6 +13,15 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22 {
     public partial class ChannelPage {
         
         /// <summary>
+        /// lblChannelName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblChannelName;
+        
+        /// <summary>
         /// lblSub control.
         /// </summary>
         /// <remarks>
@@ -29,6 +38,42 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSub;
+        
+        /// <summary>
+        /// ChannelNAme control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ChannelNAme;
+        
+        /// <summary>
+        /// tbChannelName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbChannelName;
+        
+        /// <summary>
+        /// cbAdds control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbAdds;
+        
+        /// <summary>
+        /// RequiredFieldValChannelName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValChannelName;
         
         /// <summary>
         /// btnUpgrade control.
