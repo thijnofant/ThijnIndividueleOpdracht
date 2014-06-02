@@ -96,7 +96,7 @@
     </Compile>
     <Compile Include="Classes\Playlist.cs" />
     <Compile Include="Classes\Video.cs" />
-    <Compile Include="Controller.cs" />
+    <Compile Include="Classes\Controller.cs" />
     <Compile Include="CreateAccount.aspx.cs">
       <DependentUpon>CreateAccount.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

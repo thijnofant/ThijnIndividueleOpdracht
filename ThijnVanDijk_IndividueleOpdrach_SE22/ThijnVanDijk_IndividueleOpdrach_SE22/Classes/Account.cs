@@ -12,23 +12,13 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
     {
         public Account()
         {
-            throw new NotImplementedException();
+            TimeOut = DateTime.Now.AddMinutes(10);
         }
 
         public string Name { get; private set; }
 
-        public string Password { get; private set; }
-
         public List<Channel> Subscribtion { get; private set; }
 
-        public bool Upgrade()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool LogIn(string password)
-        {
-            throw new NotImplementedException();
-        }
+        public DateTime TimeOut { get; private set; }
     }
 }

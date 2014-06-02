@@ -130,7 +130,7 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             }
         }
 
-        public void UpgradeAccount(string userName, string channelName, bool Adds)
+        public void UpgradeAccount(string userName, string channelName, bool Adds, string desc)
         {
             string adds = "N";
             if (Adds == true)
@@ -181,8 +181,8 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
 
             try
             {
-                String Query1 = "INSERT INTO CHANNEL(CHANNELID, CHANNELNAME, PERSONID, ADVERTISEMENT) VALUES (" +
-                HighestID + 1 + ",'" + channelName + "'," + UserID + ",'" + adds + "')";
+                String Query1 = "INSERT INTO CHANNEL(CHANNELID, CHANNELNAME, DESCRIPTION, PERSONID, ADVERTISEMENT) VALUES (" +
+                HighestID + 1 + ",'" + channelName + "','" + desc + "'," + UserID + ",'" + adds + "')";
                 OracleCommand UpgradeChannel = new OracleCommand(Query1, conn);
                 this.conn.Open();
                 OracleDataReader reader = UpgradeChannel.ExecuteReader();
@@ -196,20 +196,30 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             }
         }
 
-        public string GetSubs(string ChannelName)
+        public Channel GetChannel(string ChannelName)
         {
-            string returnstring = "0";
+            Channel returnchannel = null;
             int ChannelID = 0;
-            #region getID
+            #region GetChannel
             try
             {
-                String Query1 = "SELECT CHANNELID FROM CHANNEL WHERE CHANNELNAME = '"+ ChannelName + "'";
+                String Query1 = "SELECT CHANNELID, CHANNELNAME, DESCRIPTION, ADVERTISEMENT FROM CHANNEL WHERE CHANNELNAME = '" + ChannelName + "'";
                 OracleCommand NewAccount = new OracleCommand(Query1, conn);
                 this.conn.Open();
                 OracleDataReader reader = NewAccount.ExecuteReader();
-                reader.Read();
-                int temp = reader.GetInt32(0);
-                ChannelID = temp;
+                while (reader.Read())
+                {
+                    ChannelID = Convert.ToInt32(reader["CHANNELID"]);
+                    string name = reader["CHANNELNAME"].ToString();
+                    string discription = reader["DESCRIPTION"].ToString();
+                    string tempAdd = reader["ADVERTISEMENT"].ToString();
+                    bool adds = false;
+                    if (tempAdd.ToUpper() == "YES")
+                    {
+                        adds = true;
+                    }
+                    returnchannel = new Channel(ChannelID, name, discription, adds);
+                }
             }
             catch
             {
@@ -219,16 +229,16 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
                 conn.Close();
             }
             #endregion
-
+            #region GetSubs
             try
             {
-                String Query1 = "SELECT COUNT(PERSONID) FROM SUBSCRIPTION WHERE CHANNELID = " + ChannelID;
+                String Query1 = "SELECT COUNT(PERSONID) AS  FROM SUBSCRIPTION WHERE CHANNELID = " + ChannelID;
                 OracleCommand NewAccount = new OracleCommand(Query1, conn);
                 this.conn.Open();
                 OracleDataReader reader = NewAccount.ExecuteReader();
                 reader.Read();
                 int temp = reader.GetInt32(0);
-                returnstring = temp.ToString();
+                returnchannel.SetSubscribers(temp);
             }
             catch
             {
@@ -237,9 +247,8 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             {
                 conn.Close();
             }
-
-            return returnstring;
-
+            #endregion
+            return returnchannel;
         }
 
         public void Subscribe(string channelName, string userName)

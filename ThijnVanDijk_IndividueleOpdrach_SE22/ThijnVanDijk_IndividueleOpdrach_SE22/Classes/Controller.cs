@@ -12,7 +12,10 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
         private static Controller _instance = new Controller();
 
         // Private constructor om te voorkomen dat anderen een instantie kunnen aanmaken.
-        private Controller() { }
+        private Controller() 
+        {
+            Channels = new List<Channel>();
+        }
 
         // Via een static read-only property kan de instantie benaderd worden.
         public static Controller Instance
@@ -23,6 +26,8 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             }
         }
         #endregion
+
+        List<Channel> Channels;
 
         private DBConnect connector = new DBConnect();
 
@@ -36,14 +41,37 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             connector.CreateAccount(userName, password);
         }
 
-        public void upgradeAccount(string userName, string channelName, bool adds)
+        public void upgradeAccount(string userName, string channelName, bool adds, string desc)
         {
-            connector.UpgradeAccount(userName, channelName, adds);
+            connector.UpgradeAccount(userName, channelName, adds, desc);
         }
 
         public string GetSubs(string ChannelName)
         {
-            return connector.GetSubs(ChannelName);
+            foreach (Channel a in Channels)
+            {
+                if (a.Name == ChannelName && a.TimeOut < DateTime.Now)
+                {
+                    return a.Subscribers.ToString();
+                }
+            }
+            Channel temp = connector.GetChannel(ChannelName);
+            Channels.Add(temp);
+            return temp.Subscribers.ToString();
+        }
+
+        public string GetDisc(string ChannelName)
+        {
+            foreach (Channel a in Channels)
+            {
+                if (a.Name == ChannelName && a.TimeOut < DateTime.Now)
+                {
+                    return a.ChannelDiscription;
+                }
+            }
+            Channel temp = connector.GetChannel(ChannelName);
+            Channels.Add(temp);
+            return temp.ChannelDiscription;
         }
 
         public void Subscribe(string channelName, string userName)
