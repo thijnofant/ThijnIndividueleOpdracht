@@ -12,20 +12,11 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
     {
         public Channel(int channelID, string name, string discription, bool adds)
         {
-            TimeOut = DateTime.Now.AddMinutes(10);
-
             this.ChannelID = channelID;
             this.Name = name;
             this.ChannelDiscription = discription;
             this.EnabledForAdds = adds;
         }
-
-        public void SetSubscribers(int subs)
-        {
-            Subscribers = subs;
-        }
-
-        public DateTime TimeOut { get; private set; }
 
         public bool EnabledForAdds {get; private set;}
 
@@ -44,6 +35,11 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
         public bool UploadVideo()
         {
             throw new NotImplementedException();
+        }
+
+        public void SetSubscribers(int subs)
+        {
+            this.Subscribers = subs;
         }
     }
 }

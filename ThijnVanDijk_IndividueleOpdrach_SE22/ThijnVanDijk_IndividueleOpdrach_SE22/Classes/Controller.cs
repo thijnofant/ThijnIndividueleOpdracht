@@ -7,17 +7,15 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
 {
     public class Controller
     {
-        #region singleton
-        // Thread-safe oplossing om slechts één instantie aan te maken.
         private static Controller _instance = new Controller();
+        private List<Channel> Channels;
+        private DBConnect connector = new DBConnect();
 
-        // Private constructor om te voorkomen dat anderen een instantie kunnen aanmaken.
         private Controller() 
         {
-            Channels = new List<Channel>();
+            this.Channels = new List<Channel>();
         }
 
-        // Via een static read-only property kan de instantie benaderd worden.
         public static Controller Instance
         {
             get
@@ -25,58 +23,57 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
                 return _instance;
             }
         }
-        #endregion
-
-        List<Channel> Channels;
-
-        private DBConnect connector = new DBConnect();
 
         public string LogIn(string userName, string password) 
         {
-            return connector.LogIn(userName, password);
+            return this.connector.LogIn(userName, password);
         }
 
         public void NewAccount(string userName, string password)
         {
-            connector.CreateAccount(userName, password);
+            this.connector.CreateAccount(userName, password);
         }
 
-        public void upgradeAccount(string userName, string channelName, bool adds, string desc)
+        public void UpgradeAccount(string userName, string channelName, bool adds, string desc)
         {
-            connector.UpgradeAccount(userName, channelName, adds, desc);
+            this.connector.UpgradeAccount(userName, channelName, adds, desc);
         }
 
-        public string GetSubs(string ChannelName)
+        public string GetSubs(string channelName)
         {
-            foreach (Channel a in Channels)
+            Channel temp = this.connector.GetChannel(channelName);
+            this.Channels.Add(temp);
+            if (temp != null)
             {
-                if (a.Name == ChannelName && a.TimeOut < DateTime.Now)
+                return temp.Subscribers.ToString();
+            }
+            return "";
+        }
+
+        public string GetDisc(string channelName)
+        {
+            foreach (Channel a in this.Channels)
+            {
+                if (a != null)
                 {
-                    return a.Subscribers.ToString();
+                    if (a.Name == channelName)
+                    {
+                        return a.ChannelDiscription;
+                    }
                 }
             }
-            Channel temp = connector.GetChannel(ChannelName);
-            Channels.Add(temp);
-            return temp.Subscribers.ToString();
-        }
-
-        public string GetDisc(string ChannelName)
-        {
-            foreach (Channel a in Channels)
+            Channel temp = this.connector.GetChannel(channelName);
+            this.Channels.Add(temp);
+            if(temp != null)
             {
-                if (a.Name == ChannelName && a.TimeOut < DateTime.Now)
-                {
-                    return a.ChannelDiscription;
-                }
+                return temp.ChannelDiscription;
             }
-            Channel temp = connector.GetChannel(ChannelName);
-            Channels.Add(temp);
-            return temp.ChannelDiscription;
+            return "";
         }
 
         public void Subscribe(string channelName, string userName)
         {
-            connector.Subscribe(channelName, userName);
+            this.connector.Subscribe(channelName, userName);
         }
     }
 }

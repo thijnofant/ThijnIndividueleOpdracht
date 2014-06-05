@@ -84,6 +84,7 @@
     <Compile Include="ChannelPage.aspx.cs">
       <DependentUpon>ChannelPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="ChannelPage.aspx.designer.cs">
       <DependentUpon>ChannelPage.aspx</DependentUpon>
@@ -92,7 +93,7 @@
     <Compile Include="Classes\Channel.cs" />
     <Compile Include="Classes\Comment.cs" />
     <Compile Include="Classes\DBConnect.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Classes\Playlist.cs" />
     <Compile Include="Classes\Video.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="CreateAccount.aspx.cs">
       <DependentUpon>CreateAccount.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="CreateAccount.aspx.designer.cs">
       <DependentUpon>CreateAccount.aspx</DependentUpon>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
 
 namespace ThijnVanDijk_IndividueleOpdrach_SE22
 {
@@ -12,13 +13,15 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
     {
         public Account()
         {
-            TimeOut = DateTime.Now.AddMinutes(10);
         }
 
         public string Name { get; private set; }
 
         public List<Channel> Subscribtion { get; private set; }
 
-        public DateTime TimeOut { get; private set; }
+        public DataTable GetSubsVids()
+        {
+            return null;
+        }
     }
 }

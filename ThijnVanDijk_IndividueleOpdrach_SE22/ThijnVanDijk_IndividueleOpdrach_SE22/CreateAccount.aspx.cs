@@ -20,8 +20,8 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
 
         protected void btnNewAccount_Click(object sender, EventArgs e)
         {
-            string userName = tbUserName.Text;
-            string password = tbPassword.Text;
+            string userName = this.tbUserName.Text;
+            string password = this.tbPassword.Text;
 
             Controller.Instance.NewAccount(userName, password);
 

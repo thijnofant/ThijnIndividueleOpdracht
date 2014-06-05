@@ -12,20 +12,22 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.Cookies["WhaleTV"] != null)
+            Session.Timeout = 10;
+
+            if (Session["UserName"] != null)
             {
-                HyperLink1.Text = Request.Cookies["WhaleTV"]["UserName"];
+                this.HyperLink1.Text = Session["UserName"].ToString();
 
                 if (Request.Cookies["WhaleTV"]["Channel"] != null)
                 {
-                    HyperLink1.NavigateUrl = "Channel/" + Request.Cookies["WhaleTV"]["Channel"];
+                    this.HyperLink1.NavigateUrl = "Channel/" + Request.Cookies["WhaleTV"]["Channel"];
                 }
                 else
                 {
-                    HyperLink1.NavigateUrl = "Channel/" + Request.Cookies["WhaleTV"]["UserName"];
+                    this.HyperLink1.NavigateUrl = "Channel/" + Session["UserName"];
                 }
 
-                hpSignUp.Text = "SignOut";
+                this.hpSignUp.Text = "SignOut";
             }
         }
     }

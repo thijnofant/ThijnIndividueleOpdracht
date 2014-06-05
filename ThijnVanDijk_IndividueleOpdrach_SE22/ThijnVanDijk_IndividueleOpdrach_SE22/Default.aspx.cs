@@ -9,8 +9,11 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
 {
     public partial class _Default : System.Web.UI.Page
     {
+        private DBConnect connect = new DBConnect();
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            GridView1.DataSource = connect.read();
         }
     }
 }

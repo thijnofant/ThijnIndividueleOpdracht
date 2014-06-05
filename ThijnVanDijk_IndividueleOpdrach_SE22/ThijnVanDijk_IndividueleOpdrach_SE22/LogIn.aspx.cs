@@ -11,7 +11,7 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.Cookies["WhaleTV"] != null)
+            if (Session["UserName"] != null)
             {
                 Response.Redirect("Default.aspx");
             }
@@ -22,18 +22,19 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             string userName = tbUserName.Text;
             string password = tbPassword.Text;
 
-            string Passcheck = Controller.Instance.LogIn(userName, password);
+            string passcheck = Controller.Instance.LogIn(userName, password);
 
-            if (Passcheck == "1")
+            if (passcheck == "1")
             {
-                Response.Cookies["WhaleTV"]["UserName"] = tbUserName.Text;
+                Session["UserName"] = tbUserName.Text;
                 Response.Cookies["WhaleTV"].Expires = DateTime.Now.AddMinutes(15);
                 Response.Redirect("LogIn.aspx");
             }
-            else if (Passcheck != "0")
+            else if (passcheck != "0")
             {
-                Response.Cookies["WhaleTV"]["UserName"] = tbUserName.Text;
-                Response.Cookies["WhaleTV"]["Channel"] = Passcheck;
+                Session["UserName"] = tbUserName.Text;
+                Session.Timeout = 5;
+                Response.Cookies["WhaleTV"]["Channel"] = passcheck;
                 Response.Cookies["WhaleTV"].Expires = DateTime.Now.AddMinutes(15);
                 Response.Redirect("LogIn.aspx");
             }
