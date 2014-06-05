@@ -14,17 +14,17 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
         {
             Session.Timeout = 10;
 
-            if (Session["UserName"] != null)
+            if (this.Session["UserName"] != null)
             {
-                this.HyperLink1.Text = Session["UserName"].ToString();
+                this.HyperLink1.Text = this.Session["UserName"].ToString();
 
-                if (Request.Cookies["WhaleTV"]["Channel"] != null)
+                if (this.Request.Cookies["WhaleTV"]["Channel"] != null)
                 {
-                    this.HyperLink1.NavigateUrl = "Channel/" + Request.Cookies["WhaleTV"]["Channel"];
+                    this.HyperLink1.NavigateUrl = "Channel/" + this.Request.Cookies["WhaleTV"]["Channel"];
                 }
                 else
                 {
-                    this.HyperLink1.NavigateUrl = "Channel/" + Session["UserName"];
+                    this.HyperLink1.NavigateUrl = "Channel/" + this.Session["UserName"];
                 }
 
                 this.hpSignUp.Text = "SignOut";

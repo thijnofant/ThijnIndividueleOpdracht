@@ -8,12 +8,12 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
     public class Controller
     {
         private static Controller _instance = new Controller();
-        private List<Channel> Channels;
+        private List<Channel> channels;
         private DBConnect connector = new DBConnect();
 
         private Controller() 
         {
-            this.Channels = new List<Channel>();
+            this.channels = new List<Channel>();
         }
 
         public static Controller Instance
@@ -42,17 +42,17 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
         public string GetSubs(string channelName)
         {
             Channel temp = this.connector.GetChannel(channelName);
-            this.Channels.Add(temp);
+            this.channels.Add(temp);
             if (temp != null)
             {
                 return temp.Subscribers.ToString();
             }
-            return "";
+            return string.Empty;
         }
 
         public string GetDisc(string channelName)
         {
-            foreach (Channel a in this.Channels)
+            foreach (Channel a in this.channels)
             {
                 if (a != null)
                 {
@@ -63,12 +63,12 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
                 }
             }
             Channel temp = this.connector.GetChannel(channelName);
-            this.Channels.Add(temp);
+            this.channels.Add(temp);
             if(temp != null)
             {
                 return temp.ChannelDiscription;
             }
-            return "";
+            return string.Empty;
         }
 
         public void Subscribe(string channelName, string userName)
