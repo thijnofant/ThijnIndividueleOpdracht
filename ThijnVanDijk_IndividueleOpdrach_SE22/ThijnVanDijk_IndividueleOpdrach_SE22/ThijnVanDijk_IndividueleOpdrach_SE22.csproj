@@ -64,6 +64,7 @@
     <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
     <Content Include="VideoPage.aspx" />
+    <Content Include="VideoUpload.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -145,6 +146,13 @@
     </Compile>
     <Compile Include="VideoPage.aspx.designer.cs">
       <DependentUpon>VideoPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VideoUpload.aspx.cs">
+      <DependentUpon>VideoUpload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VideoUpload.aspx.designer.cs">
+      <DependentUpon>VideoUpload.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

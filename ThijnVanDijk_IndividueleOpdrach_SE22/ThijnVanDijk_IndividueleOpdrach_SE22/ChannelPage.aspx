@@ -6,7 +6,9 @@
 &nbsp;<asp:Label ID="lblSub" runat="server" Text="Subscribers: 000000"></asp:Label>
     <asp:Button ID="btnSub" runat="server" onclick="btnSub_Click" 
         Text="Subscribe" style="margin-left: 120px" />
-&nbsp;<br />
+&nbsp;<asp:Button ID="btnUpload" runat="server" onclick="btnUpload_Click" 
+        Text="Upload" />
+    <br />
     <asp:Label ID="ChannelNAme" runat="server" Text="ChannelName :"></asp:Label>
     &nbsp;&nbsp;
     <asp:TextBox ID="tbChannelName" runat="server"></asp:TextBox>

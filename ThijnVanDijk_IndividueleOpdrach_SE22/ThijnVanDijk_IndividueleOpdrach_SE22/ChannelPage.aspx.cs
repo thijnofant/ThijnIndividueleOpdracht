@@ -20,7 +20,8 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
                 this.tbDisc.Visible = true;
                 this.cbAdds.Visible = true;
                 this.RequiredFieldValChannelName.Enabled = true;
-            }
+                this.btnUpload.Visible = false;
+             }
             else
             {
                 lblDiscription.Text = Controller.Instance.GetDisc(Page.RouteData.Values["ChannelName"].ToString());
@@ -30,8 +31,13 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
                 cbAdds.Visible = false;
                 tbDisc.Visible = false;
                 RequiredFieldValChannelName.Enabled = false;
+                this.btnUpload.Visible = false;
                 string subs = Controller.Instance.GetSubs(Page.RouteData.Values["ChannelName"].ToString());
                 lblSub.Text = "Subscribers: " + subs;
+            }
+            if (Request.Cookies["WhaleTV"] != null && Request.Cookies["WhaleTV"]["Channel"] == Page.RouteData.Values["ChannelName"].ToString())
+            {
+                this.btnUpload.Visible = true;
             }
             lblChannelName.Text = Page.RouteData.Values["ChannelName"].ToString();
         }
@@ -47,6 +53,11 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
         {
             Controller.Instance.Subscribe(Page.RouteData.Values["ChannelName"].ToString(), Session["UserName"].ToString());
             Response.RedirectToRoute("ChannelPage", "ChannelName='" + Page.RouteData.Values["ChannelName"].ToString() + "'");
+        }
+
+        protected void btnUpload_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/VideoUpload.aspx");
         }
     }
 }
