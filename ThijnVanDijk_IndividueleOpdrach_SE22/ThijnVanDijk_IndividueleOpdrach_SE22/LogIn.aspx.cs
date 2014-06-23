@@ -27,6 +27,7 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             if (passcheck == "1")
             {
                 this.Session["UserName"] = this.tbUserName.Text;
+                this.Session.Timeout = 5;
                 this.Response.Redirect("LogIn.aspx");
             }
             else if (passcheck != "0")

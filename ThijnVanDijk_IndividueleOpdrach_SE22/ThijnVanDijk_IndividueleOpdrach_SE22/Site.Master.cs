@@ -25,8 +25,13 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
                 {
                     this.HyperLink1.NavigateUrl = "Channel/" + this.Session["UserName"];
                 }
-
                 this.hpSignUp.Text = "SignOut";
+            }
+            else
+            {
+                this.HyperLink1.Text = "LogIn";
+                this.HyperLink1.NavigateUrl = "~/LogIn.aspx";
+                this.hpSignUp.Text = "SignUp";
             }
         }
     }

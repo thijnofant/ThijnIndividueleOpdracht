@@ -76,7 +76,7 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
                 #region GetChannelName
                 try
                 {
-                    string query1 = "SELECT CHANNELNAME AS A FROM CHANNEL WHERE PERSONID = " + personID;
+                    string query1 = "SELECT CHANNELNAME AS A FROM CHANNEL2 WHERE PERSONID = " + personID;
                     OracleCommand getID = new OracleCommand(query1, this.conn);
                     this.conn.Open();
                     OracleDataReader reader = getID.ExecuteReader();
@@ -177,7 +177,7 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             #region GetID
             try
             {
-                string query1 = "SELECT MAX(CHANNELID) FROM CHANNEL";
+                string query1 = "SELECT MAX(CHANNELID) FROM CHANNEL2";
                 OracleCommand newAccount = new OracleCommand(query1, this.conn);
                 this.conn.Open();
                 OracleDataReader reader = newAccount.ExecuteReader();
@@ -196,7 +196,7 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
 
             try
             {
-                string query1 = "INSERT INTO CHANNEL(CHANNELID, CHANNELNAME, DESCRIPTION, PERSONID, ADVERTISEMENT) VALUES (" +
+                string query1 = "INSERT INTO CHANNEL2(CHANNELID, CHANNELNAME, DESCRIPTION, PERSONID, ADVERTISEMENT) VALUES (" +
                 highestID + 1 + ",'" + channelName + "','" + desc + "'," + userID + ",'" + addis + "')";
                 OracleCommand upgradeChannel = new OracleCommand(query1, this.conn);
                 this.conn.Open();
@@ -218,7 +218,7 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             #region GetChannel
             try
             {
-                string query1 = "SELECT CHANNELID, CHANNELNAME, DESCRIPTION, ADVERTISEMENT FROM CHANNEL WHERE CHANNELNAME = '" + channelName + "'";
+                string query1 = "SELECT CHANNELID, CHANNELNAME, DESCRIPTION, ADVERTISEMENT FROM CHANNEL2 WHERE CHANNELNAME = '" + channelName + "'";
                 OracleCommand newAccount = new OracleCommand(query1, this.conn);
                 this.conn.Open();
                 OracleDataReader reader = newAccount.ExecuteReader();
@@ -272,7 +272,7 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             #region getChannelID
             try
             {
-                string query1 = "SELECT CHANNELID FROM CHANNEL WHERE CHANNELNAME = '" + channelName + "'";
+                string query1 = "SELECT CHANNELID FROM CHANNEL2 WHERE CHANNELNAME = '" + channelName + "'";
                 OracleCommand newAccount = new OracleCommand(query1, this.conn);
                 this.conn.Open();
                 OracleDataReader reader = newAccount.ExecuteReader();
@@ -328,12 +328,13 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             }
         }
 
+        #region fix
         public DataTable Read()
         {
             DataTable dataTable = new DataTable();
             try
             {
-                OracleCommand cmd = new OracleCommand("SELECT CHANNELID from CHANNEL", this.conn);
+                OracleCommand cmd = new OracleCommand("SELECT VIDEONAME from VIDEO 2 WHERE VIDEOID > (SELECT MAX(VIDEOID-20))", this.conn);
                 this.conn.Open();
                 using (OracleDataReader reader = cmd.ExecuteReader())
                 {
@@ -350,6 +351,62 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
 
             return dataTable;
         }
+        #endregion
+
+        public Video GetVidByID(int videoID)
+        {
+            Video returnvideo = null;
+            try
+            {
+                string query1 = "SELECT A.VIDEONAME, A.LENGHT, A.VIEWS, A.LIKES, A.DISLIKES, A.FILEPATH,B.CHANNELNAME FROM VIDEO2 A, CHANNEL2 B WHERE A.CHANNELID = B.CHANNELID AND VIDEOID = "+videoID;
+                OracleCommand newAccount = new OracleCommand(query1, this.conn);
+                this.conn.Open();
+                OracleDataReader reader = newAccount.ExecuteReader();
+                while (reader.Read())
+                {
+                    string name = reader["VIDEONAME"].ToString();
+                    int Lenght = Convert.ToInt32(reader["LENGHT"]);
+                    int Views = 0;
+                    if (!DBNull.Value.Equals(reader["VIEWS"]))
+                        Views = Convert.ToInt32(reader["VIEWS"]);
+                    int Likes = 0;
+                    if (!DBNull.Value.Equals(reader["LIKES"]))
+                        Likes = Convert.ToInt32(reader["LIKES"]);
+                    int dislikes = 0;
+                    if (!DBNull.Value.Equals(reader["DISLIKES"]))
+                        dislikes = Convert.ToInt32(reader["DISLIKES"]);
+
+                    string path = reader["FILEPATH"].ToString();
+
+                    string channel = reader["CHANNELNAME"].ToString();
+                    returnvideo = new Video(name, channel, Lenght, path, Likes, dislikes,Views);
+                }
+            }
+            catch(Exception ex)
+            {
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+
+            try
+            {
+                string query1 = "UPDATE VIDEO2 SET VIEWS = Views + 1 WHERE VIDEOID ="+videoID;
+                OracleCommand newAccount = new OracleCommand(query1, this.conn);
+                this.conn.Open();
+                newAccount.ExecuteNonQuery();
+            }
+            catch
+            {
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+
+            return returnvideo;
+        }
 
         public bool VideoUpload(Video vid)
         {
@@ -360,7 +417,7 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
 
             try
             {
-                string query1 = "SELECT (MAX(VIDEOID)+1) FROM VIDEO";
+                string query1 = "SELECT (MAX(VIDEOID)+1) FROM VIDEO2";
                 OracleCommand newAccount = new OracleCommand(query1, this.conn);
                 this.conn.Open();
                 OracleDataReader reader = newAccount.ExecuteReader();
@@ -400,7 +457,7 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
 
             try
             {
-                string command = "INSERT INTO VIDEO(VIDEOID,CHANNELID,VIDEONAME,LENGHT,VIEWS) VALUES (:vidID , :ChannelID , :VidName, :lenght , :Views)";
+                string command = "INSERT INTO VIDEO2(VIDEOID,CHANNELID,VIDEONAME,LENGHT,VIEWS,FILEPATH) VALUES (:vidID , :ChannelID , :VidName, :lenght , :Views,:FILEPATH)";
 
                 OracleCommand cmd = new OracleCommand(command, this.conn);
 
@@ -418,6 +475,9 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
 
                 cmd.Parameters.Add(new OracleParameter(":Views", OracleDbType.Int32));
                 cmd.Parameters[":Views"].Value = 0;
+
+                cmd.Parameters.Add(new OracleParameter(":FILEPATH", OracleDbType.Varchar2));
+                cmd.Parameters[":FILEPATH"].Value = vid.FilePath;
                 this.conn.Open();
                 cmd.ExecuteNonQuery();
             }

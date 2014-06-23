@@ -80,5 +80,49 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
         {
             this.connector.Subscribe(channelName, userName);
         }
+
+        public string lenghtconverter(int secs)
+        {
+            string returnstring = string.Empty;
+            int time = secs;
+            int hours = 0;
+            int minutes = 0;
+            while(time / 3600 >= 1)
+            {
+                hours = hours + 1;
+                time = time - 3600;
+            }
+            while(time / 60 >= 1)
+            {
+                minutes = minutes + 1;
+                time = time - 60;
+            }
+
+            if (hours == 0)
+                returnstring += "00:";
+            else if (hours < 10)
+                returnstring += "0" + hours + ":";
+            else
+                returnstring += hours;
+            if (minutes == 0)
+                returnstring += "00:";
+            else if (minutes < 10)
+                returnstring += "0" + minutes + ":";
+            else
+                returnstring += minutes;
+            if (time == 0)
+                returnstring += "00";
+            else if (time < 10)
+                returnstring += "0" + time;
+            else
+                returnstring += time;
+
+            return returnstring;
+        }
+
+        public Video GetVid(int id)
+        {
+            return connector.GetVidByID(id);
+        }
     }
 }

@@ -11,19 +11,28 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.Cookies["WhaleTV"] == null 
-                && Session["UserName"].ToString() == Page.RouteData.Values["ChannelName"].ToString())
+            if (Session["UserName"] != null)
             {
-                this.btnUpgrade.Visible = true;
-                this.ChannelNAme.Visible = true;
-                this.tbChannelName.Visible = true;
-                this.tbDisc.Visible = true;
-                this.cbAdds.Visible = true;
-                this.RequiredFieldValChannelName.Enabled = true;
-                this.btnUpload.Visible = false;
+
+                if (Session["UserName"].ToString() == Page.RouteData.Values["ChannelName"].ToString())
+                {
+                    this.btnUpgrade.Visible = true;
+                    this.ChannelNAme.Visible = true;
+                    this.tbChannelName.Visible = true;
+                    this.tbDisc.Visible = true;
+                    this.cbAdds.Visible = true;
+                    this.RequiredFieldValChannelName.Enabled = true;
+                    this.btnUpload.Visible = false;
+                }
             }
             else if (Request.Cookies["WhaleTV"] != null && Page.RouteData.Values["ChannelName"].ToString() == Request.Cookies["WhaleTV"]["Channel"])
             {
+                btnUpgrade.Visible = false;
+                ChannelNAme.Visible = false;
+                tbChannelName.Visible = false;
+                cbAdds.Visible = false;
+                tbDisc.Visible = false;
+                RequiredFieldValChannelName.Enabled = false;
                 this.btnUpload.Visible = true; ;
             }
             else

@@ -22,6 +22,8 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
 
         public int Dislikes {get; private set;}
 
+        public int views { get; private set; }
+
         public List<string> Tags {get; private set;}
 
         public Video(string name, string channelName, int lenght, string filepath)
@@ -32,7 +34,7 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             this.FilePath = filepath;
         }
 
-        public Video(string name, string channelName, int lenght, string filepath, int likes, int dislikes)
+        public Video(string name, string channelName, int lenght, string filepath, int likes, int dislikes, int views)
         {
             this.VideoName = name;
             this.ChannelName = channelName;
