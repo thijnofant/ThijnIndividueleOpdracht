@@ -11,8 +11,8 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.Cookies["WhaleTV"] != null && Session["UserName"].ToString() == Page.RouteData.Values["ChannelName"].ToString()
-                && Request.Cookies["WhaleTV"]["Channel"] == null)
+            if (Request.Cookies["WhaleTV"] == null 
+                && Session["UserName"].ToString() == Page.RouteData.Values["ChannelName"].ToString())
             {
                 this.btnUpgrade.Visible = true;
                 this.ChannelNAme.Visible = true;
@@ -21,7 +21,11 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
                 this.cbAdds.Visible = true;
                 this.RequiredFieldValChannelName.Enabled = true;
                 this.btnUpload.Visible = false;
-             }
+            }
+            else if (Request.Cookies["WhaleTV"] != null && Page.RouteData.Values["ChannelName"].ToString() == Request.Cookies["WhaleTV"]["Channel"])
+            {
+                this.btnUpload.Visible = true; ;
+            }
             else
             {
                 lblDiscription.Text = Controller.Instance.GetDisc(Page.RouteData.Values["ChannelName"].ToString());

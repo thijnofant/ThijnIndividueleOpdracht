@@ -17,8 +17,7 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             if (this.Session["UserName"] != null)
             {
                 this.HyperLink1.Text = this.Session["UserName"].ToString();
-
-                if (this.Request.Cookies["WhaleTV"]["Channel"] != null)
+                if (this.Request.Cookies["WhaleTV"] != null)
                 {
                     this.HyperLink1.NavigateUrl = "Channel/" + this.Request.Cookies["WhaleTV"]["Channel"];
                 }

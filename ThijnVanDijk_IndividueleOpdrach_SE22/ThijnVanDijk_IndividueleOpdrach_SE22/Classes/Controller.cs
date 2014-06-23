@@ -50,6 +50,11 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             return string.Empty;
         }
 
+        public bool uploadvid(Video vid)
+        {
+            return connector.VideoUpload(vid);
+        }
+
         public string GetDisc(string channelName)
         {
             foreach (Channel a in this.channels)

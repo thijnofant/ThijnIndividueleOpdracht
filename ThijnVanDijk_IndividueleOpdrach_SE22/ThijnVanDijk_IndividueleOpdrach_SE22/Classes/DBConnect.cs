@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Oracle.DataAccess.Client;
 using System.Data;
 using System.Data.SqlClient;
+using Oracle.ManagedDataAccess.Client;
 
 namespace ThijnVanDijk_IndividueleOpdrach_SE22
 {
@@ -349,6 +349,88 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             }
 
             return dataTable;
+        }
+
+        public bool VideoUpload(Video vid)
+        {
+            int highestID = 0;
+            int ChannelID = 0;
+            bool returner = true;
+            #region MaxID
+
+            try
+            {
+                string query1 = "SELECT (MAX(VIDEOID)+1) FROM VIDEO";
+                OracleCommand newAccount = new OracleCommand(query1, this.conn);
+                this.conn.Open();
+                OracleDataReader reader = newAccount.ExecuteReader();
+                reader.Read();
+                highestID = reader.GetInt32(0);
+            }
+            catch
+            {
+                highestID = 1;
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+            #endregion
+
+            #region ChannelID
+
+            try
+            {
+                string query1 = "SELECT CHANNELID FROM CHANNEL WHERE CHANNELNAME = '" + vid.ChannelName+"'";
+                OracleCommand newAccount = new OracleCommand(query1, this.conn);
+                this.conn.Open();
+                OracleDataReader reader = newAccount.ExecuteReader();
+                reader.Read();
+                ChannelID = reader.GetInt32(0);
+            }
+            catch
+            {
+                returner = false;
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+            #endregion
+
+            try
+            {
+                string command = "INSERT INTO VIDEO(VIDEOID,CHANNELID,VIDEONAME,LENGHT,VIEWS) VALUES (:vidID , :ChannelID , :VidName, :lenght , :Views)";
+
+                OracleCommand cmd = new OracleCommand(command, this.conn);
+
+                cmd.Parameters.Add(new OracleParameter(":vidID", OracleDbType.Int32));
+                cmd.Parameters[":vidID"].Value = highestID;
+
+                cmd.Parameters.Add(new OracleParameter(":ChannelID", OracleDbType.Int32));
+                cmd.Parameters[":ChannelID"].Value = ChannelID;
+
+                cmd.Parameters.Add(new OracleParameter(":VidName", OracleDbType.Varchar2));
+                cmd.Parameters[":VidName"].Value = vid.VideoName;
+
+                cmd.Parameters.Add(new OracleParameter(":lenght", OracleDbType.Int32));
+                cmd.Parameters[":lenght"].Value = vid.Lenght;
+
+                cmd.Parameters.Add(new OracleParameter(":Views", OracleDbType.Int32));
+                cmd.Parameters[":Views"].Value = 0;
+                this.conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                returner = false;
+            }
+            finally
+            {
+                this.conn.Close();
+            }
+
+            return returner;
         }
     }
 }
