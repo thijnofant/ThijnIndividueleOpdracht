@@ -14,6 +14,7 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
         protected void Page_Load(object sender, EventArgs e)
         {
             this.GridView1.DataSource = this.connect.Read();
+            this.GridView1.DataBind();
         }
     }
 }

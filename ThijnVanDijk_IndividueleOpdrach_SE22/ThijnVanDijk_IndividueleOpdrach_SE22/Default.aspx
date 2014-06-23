@@ -5,9 +5,17 @@
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
     <asp:GridView ID="GridView1" runat="server">
-        <Columns>  
-                <asp:BoundField DataField="CHANNELID" HeaderText="CustomCHANNELID" ReadOnly="True"   
-                    SortExpression="CHANNELID" />
+        <Columns>
+            <asp:TemplateField HeaderText="Title">
+                <ItemTemplate>
+                    <asp:Label id="lblCustomerID" runat="server" Text='<%# DataBinder.Eval(Container, "DataItem.VIDNAAM") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Channel">
+                <ItemTemplate>
+                    <asp:HyperLink ID="hypelinkchannel" runat="server" Text='<%# DataBinder.Eval(Container, "DataItem.CHANNAME") %>' NavigateUrl='<%# string.Format("channel/{0}",DataBinder.Eval(Container,"DataItem.CHANNAME")) %>'></asp:HyperLink>
+                </ItemTemplate>
+            </asp:TemplateField>
         </Columns>
-    </asp:GridView>
+    </asp:GridView> 
 </asp:Content>

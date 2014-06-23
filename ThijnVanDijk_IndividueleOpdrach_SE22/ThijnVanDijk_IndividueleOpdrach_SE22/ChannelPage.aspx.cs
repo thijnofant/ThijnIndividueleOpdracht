@@ -50,7 +50,16 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             }
             if (Request.Cookies["WhaleTV"] != null && Request.Cookies["WhaleTV"]["Channel"] == Page.RouteData.Values["ChannelName"].ToString())
             {
+                lblDiscription.Text = Controller.Instance.GetDisc(Page.RouteData.Values["ChannelName"].ToString());
+                btnUpgrade.Visible = false;
+                ChannelNAme.Visible = false;
+                tbChannelName.Visible = false;
+                cbAdds.Visible = false;
+                tbDisc.Visible = false;
+                RequiredFieldValChannelName.Enabled = false;
                 this.btnUpload.Visible = true;
+                string subs = Controller.Instance.GetSubs(Page.RouteData.Values["ChannelName"].ToString());
+                lblSub.Text = "Subscribers: " + subs;
             }
             lblChannelName.Text = Page.RouteData.Values["ChannelName"].ToString();
         }

@@ -328,13 +328,13 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
             }
         }
 
-        #region fix
         public DataTable Read()
         {
             DataTable dataTable = new DataTable();
             try
             {
-                OracleCommand cmd = new OracleCommand("SELECT VIDEONAME from VIDEO 2 WHERE VIDEOID > (SELECT MAX(VIDEOID-20))", this.conn);
+                OracleCommand cmd = new OracleCommand("SELECT A.VIDEONAME AS VIDNAAM, B.CHANNELNAME AS CHANNAME FROM VIDEO2 A INNER JOIN CHANNEL2 B ON A.CHANNELID = B.CHANNELID WHERE A.VIDEOID > (SELECT MAX(VIDEOID)-20 FROM VIDEO2)", this.conn);
+                //OracleCommand cmd = new OracleCommand("SELECT * FROM VIDEO2", this.conn);
                 this.conn.Open();
                 using (OracleDataReader reader = cmd.ExecuteReader())
                 {
@@ -351,7 +351,6 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
 
             return dataTable;
         }
-        #endregion
 
         public Video GetVidByID(int videoID)
         {
@@ -438,14 +437,14 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
 
             try
             {
-                string query1 = "SELECT CHANNELID FROM CHANNEL WHERE CHANNELNAME = '" + vid.ChannelName+"'";
+                string query1 = "SELECT CHANNELID FROM CHANNEL2 WHERE CHANNELNAME = '" + vid.ChannelName+"'";
                 OracleCommand newAccount = new OracleCommand(query1, this.conn);
                 this.conn.Open();
                 OracleDataReader reader = newAccount.ExecuteReader();
                 reader.Read();
                 ChannelID = reader.GetInt32(0);
             }
-            catch
+            catch(Exception e)
             {
                 returner = false;
             }
@@ -481,7 +480,7 @@ namespace ThijnVanDijk_IndividueleOpdrach_SE22
                 this.conn.Open();
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 returner = false;
             }
